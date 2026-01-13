@@ -1,6 +1,57 @@
 import reflex as rx
 from rxconfig import config
 
+def navbar_link(text: str, url: str) -> rx.Component:
+    return rx.link(
+        rx.text(text, 
+                size="4",
+                style = {"color": "#ffffff"},
+                ),
+        href=url,
+    )
+    
+def navbar() -> rx.Component:
+    return rx.box(
+        rx.desktop_only(
+            rx.hstack(
+                rx.hstack(
+                    rx.image(
+                        src="/images/logo.jpg",
+                        width="2.25em",
+                        height="auto",
+                        border_radius="25%",
+                    ),
+                    rx.heading("NOCT",
+                               size="7",
+                               font_family="Nasalisation",
+                               letter_spacing="0.02em",
+                               ),
+                    align_items="center",
+                ),
+                rx.hstack(
+                    navbar_link("Home", "/#"),
+                    navbar_link("About", "/#"),
+                    navbar_link("Recordings", "/#"),
+                    navbar_link("Join", "/#"),
+                    justify="end",
+                    spacing="7",
+                ),
+                justify="between",
+                align_items="center",
+            ),
+        ),
+        padding="1em",
+        top="0px",
+        z_index="5",
+        width="100%",
+        style={
+            "background": "rgba(255, 255, 255, 0.08)",
+            "backdropFilter": "blur(20px), saturate(120%)",
+            "WebkitBackdropFilter": "blur(20px), saturate(120%)",
+        },
+    )
+    
+
 def index() -> rx.Component:
     return rx.box(
         rx.el.canvas(
@@ -95,6 +146,7 @@ def index() -> rx.Component:
         """,
         defer=True,),
         rx.vstack(
+            navbar(),
             rx.box(
                 rx.text(
                     "NOCT",
