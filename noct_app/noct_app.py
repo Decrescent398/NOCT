@@ -1,13 +1,14 @@
 import reflex as rx
 from rxconfig import config
 
-def navbar_link(text: str, url: str) -> rx.Component:
+def link(text: str, url: str) -> rx.Component:
     return rx.link(
         rx.text(text, 
                 size="4",
                 style = {"color": "#ffffff"},
                 ),
         href=url,
+        is_external=True,
     )
     
 def navbar() -> rx.Component:
@@ -29,10 +30,10 @@ def navbar() -> rx.Component:
                     align_items="center",
                 ),
                 rx.hstack(
-                    navbar_link("Home", "/#"),
-                    navbar_link("About", "/#"),
-                    navbar_link("Recordings", "/#"),
-                    navbar_link("Join", "/#"),
+                    link("Home", url="https://noct.com"),
+                    link("About", url="/#"),
+                    link("Recordings", url="https://youtube.com/@noctspace/"),
+                    link("Join", url="https://discord.gg/heMBuNu7kt/"),
                     justify="end",
                     spacing="7",
                 ),
@@ -51,15 +52,14 @@ def navbar() -> rx.Component:
         },
     )
     
-
-def index() -> rx.Component:
-    return rx.box(
+def stars():
+    return rx.fragment(
         rx.el.canvas(
             id="stars",
             position="fixed",
             inset="0",
             z_index="-1",
-            ),
+        ),
         rx.script("""
             (function initStars() {
             const canvas = document.getElementById("stars");
@@ -144,12 +144,37 @@ def index() -> rx.Component:
             draw();
             })();
         """,
-        defer=True,),
-        rx.vstack(
-            navbar(),
-            rx.box(
+        defer=True,
+        ),
+    )
+
+def heroScroll():
+    return rx.script(
+        """
+        (function heroScroll() {
+            const root = document.documentElement;
+            
+            function onScroll() {
+                const max = window.innerHeight * 0.7;
+                const y = Math.min(window.scrollY, max);
+                const t = y / max;
+                const eased = 1 - Math.pow(1 - t, 3);
+                
+                root.style.setProperty("--scroll", eased.toFixed(3));
+            }
+            
+            window.addEventListener("scroll", onScroll);
+            onScroll();
+        })();
+        """,
+        defer=True,
+    ),
+    
+def content() -> rx.Component:
+    return rx.box(
                 rx.text(
                     "NOCT",
+                    id="hover-audio-trigger",
                     style={
                         "color": "#ffffff",
                         "font_size": "clamp(10rem, 40vw, 50rem)",
@@ -158,23 +183,43 @@ def index() -> rx.Component:
                         "letter_spacing": "0.02em",
                         "text_align": "center",
                         "font_stretch": "expanded",
+                        "opacity": "calc(0.6 + var(--scroll, 0) * 0.4)",
+                        "transform": (
+                            "translateY(calc((1 - var(--scroll, 0)) * 40px))"
+                            "scale(calc(0.92 + var(--scroll, 0) * 0.08))"
+                        ),
+                        "filter": "blur(calc((1 - var(--scroll, 0)) * 2px))",
                     },
                 ),
                 rx.image(
                     src="/images/astronaut.png",
                     style={
-                        "position": "absolute",
+                        "position": "fixed",
                         "bottom": "0",
                         "left": "50%",
                         "height": "clamp(300px, 40vw, 50rem)",
-                        "transform": "translateX(-50%)",
+                        "transform": (
+                            "translateX(-50%) "
+                            "translateY(calc(var(--scroll, 0) * 32px))"
+                            ),
+                        "opacity": "calc(1 - min(var(--scroll, 0) * 1.4, 1))",
+                        "filter": "blur(calc(min(var(--scroll, 0) * 1.4, 1) * 8px))",
                     },
                 ),
                 position="relative",
                 width="100%",
                 height="100%",
             ),
-            position="fixed",
+    
+
+def index() -> rx.Component:
+    return rx.box(
+        stars(),
+        heroScroll(),
+        rx.vstack(
+            navbar(),
+            content(),
+            rx.box(height="5vh"),
             inset="0",
             z_index="1",
             background_color="transparent",
@@ -196,7 +241,7 @@ app = rx.App(
     theme = rx.theme(
         breakpoints=["520px", "768px", "1024px", "1280px", "1640px"],
     ),
-    stylesheets=["/fonts.css"]
+    stylesheets=["/fonts.css", "scrollbar.css"]
 )
 
 app.add_page(index, title="NOCT")
