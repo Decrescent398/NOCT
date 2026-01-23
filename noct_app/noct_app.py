@@ -174,11 +174,10 @@ def content() -> rx.Component:
     return rx.box(
                 rx.text(
                     "NOCT",
-                    id="hover-audio-trigger",
                     style={
                         "color": "#ffffff",
                         "font_size": "clamp(10rem, 40vw, 50rem)",
-                        "font_weight": "20",
+                        "font_weight": "200",
                         "font_family": "Nasalisation",
                         "letter_spacing": "0.02em",
                         "text_align": "center",
@@ -206,6 +205,33 @@ def content() -> rx.Component:
                         "filter": "blur(calc(min(var(--scroll, 0) * 1.4, 1) * 8px))",
                     },
                 ),
+                rx.flex(
+                    rx.text(
+                        "High school led astronomy colloquium series featuring talks\n from leading PhD researchers",
+                        style={
+                            "color": "#ffffff",
+                            "position": "relative",
+                            "pointer_events": "none",
+                            "opacity": "calc(clamp(0, (var(--scroll, 0) - 0.5) * 4, 1) * (0.6 + var(--scroll, 0) * 0.4))",
+                            "transform": (
+                                "translateY(-16rem)"
+                                "translateY(calc((1 - clamp(0, (var(--scroll, 0) - 0.75) * 4, 1)) * 2rem))"
+                            ),
+                            "text_align": "center",
+                            "font_size": "clamp(1rem, 1.2vw + 0.5rem, 1.75rem)",
+                            "font_weight": "400",
+                            "font_family": "sans-serif",
+                            "letter_spacing": "0.15em",
+                            "max_width": "35ch",
+                            "margin_x": "auto",
+                        }
+                    ),
+                    spacing="5",
+                    direction="row",
+                    align="center",
+                    justify="center",
+                ),
+                rx.box(height="120vh"),
                 position="relative",
                 width="100%",
                 height="100%",
@@ -219,7 +245,6 @@ def index() -> rx.Component:
         rx.vstack(
             navbar(),
             content(),
-            rx.box(height="5vh"),
             inset="0",
             z_index="1",
             background_color="transparent",
