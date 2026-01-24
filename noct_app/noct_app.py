@@ -13,33 +13,48 @@ def link(text: str, url: str) -> rx.Component:
     
 def navbar() -> rx.Component:
     return rx.box(
-        rx.desktop_only(
+        rx.hstack(
             rx.hstack(
-                rx.hstack(
-                    rx.image(
-                        src="/images/logo.jpg",
-                        width="2.25em",
-                        height="auto",
-                        border_radius="25%",
-                    ),
-                    rx.heading("NOCT",
-                               size="7",
-                               font_family="Nasalisation",
-                               letter_spacing="0.02em",
-                               ),
-                    align_items="center",
+                rx.image(
+                    src="/images/logo.jpg",
+                    width="2.25em",
+                    height="auto",
+                    border_radius="25%",
                 ),
-                rx.hstack(
-                    link("Home", url="https://noct.com"),
-                    link("About", url="/#"),
-                    link("Recordings", url="https://youtube.com/@noctspace/"),
-                    link("Join", url="https://discord.gg/heMBuNu7kt/"),
-                    justify="end",
-                    spacing="7",
+                rx.heading("NOCT",
+                            size="7",
+                            font_family="Nasalisation",
+                            letter_spacing="0.02em",
+                            ),
+                align_items="center",
+            ),
+            rx.hstack(
+                link("Home", url="https://noct.com"),
+                link("Recordings", url="https://youtube.com/@noctspace/"),
+                link("Join", url="https://discord.gg/heMBuNu7kt/"),
+                justify="end",
+                spacing="7",
+                display=["none", "none", "flex"],
+            ),
+            rx.menu.root(
+                rx.menu.trigger(
+                  rx.button(
+                    rx.icon("menu"),
+                    variant="ghost",
+                    size="3",  
+                  ),  
+                ),
+                rx.menu.content(
+                    rx.menu.item(link("Home", url="https://noct.com"),),
+                    rx.menu.item(link("Recordings", url="https://youtube.com/@noctspace/"),),
+                    rx.menu.item(link("Join", url="https://discord.gg/heMBuNu7kt/"),),
+                    display=["block", "block", "none"],
                 ),
                 justify="between",
                 align_items="center",
             ),
+            justify="between",
+            align_items="center",
         ),
         padding="1em",
         top="0px",
@@ -172,23 +187,156 @@ def heroScroll():
     
 def content() -> rx.Component:
     return rx.box(
-                rx.text(
-                    "NOCT",
-                    style={
-                        "color": "#ffffff",
-                        "font_size": "clamp(10rem, 40vw, 50rem)",
-                        "font_weight": "200",
-                        "font_family": "Nasalisation",
-                        "letter_spacing": "0.02em",
-                        "text_align": "center",
-                        "font_stretch": "expanded",
-                        "opacity": "calc(0.6 + var(--scroll, 0) * 0.4)",
-                        "transform": (
-                            "translateY(calc((1 - var(--scroll, 0)) * 40px))"
-                            "scale(calc(0.92 + var(--scroll, 0) * 0.08))"
+                rx.flex(
+                    rx.box(height="35vh"),
+                    rx.text(
+                        "NOCT",
+                        style={
+                            "color": "#ffffff",
+                            "font_size": "clamp(10rem, 40vw, 50rem)",
+                            "font_weight": "200",
+                            "font_family": "Nasalisation",
+                            "letter_spacing": "0.02em",
+                            "text_align": "center",
+                            "font_stretch": "expanded",
+                            "opacity": "calc(0.6 + var(--scroll, 0) * 0.4)",
+                            "line_height": "0.8",
+                            "filter": "blur(calc((1 - var(--scroll, 0)) * 2px))",
+                        },
+                    ),
+                    rx.flex(
+                        rx.desktop_only(
+                            rx.box(
+                                rx.image(
+                                    src="/images/apollo.png",
+                                    style={
+                                        "position": "absolute",
+                                        "top": "0",
+                                        "left": "0",
+                                        "width": "90%",
+                                        "z_index": "1",
+                                        "transition": "transform 0.3s ease, filter 0.3s ease",
+                                        "_hover": {
+                                          "transform": "scale(1.05)",
+                                          "filter": "brightness(1.2)"  
+                                        },
+                                    },
+                                ),
+                                rx.image(
+                                    src="images/kepler.png",
+                                    style={
+                                        "position": "absolute",
+                                        "top": "35%",
+                                        "left": "0",
+                                        "width": "70%",
+                                        "z_index": "2",
+                                        "transition": "transform 0.3s ease, filter 0.3s ease",
+                                        "_hover": {
+                                          "transform": "scale(1.05)",
+                                          "filter": "brightness(1.2)"  
+                                        },
+                                    },
+                                ),
+                                rx.image(
+                                    src="images/disk.png",
+                                    style={
+                                        "position": "absolute",
+                                        "top": "35%",
+                                        "left": "35%",
+                                        "width": "70%",
+                                        "z_index": "3",
+                                        "transition": "transform 0.3s ease, filter 0.3s ease",
+                                        "_hover": {
+                                          "transform": "scale(1.05)",
+                                          "filter": "brightness(1.2)"  
+                                        },
+                                    },
+                                ),
+                                position="relative",
+                                width="clamp(260px, 40vw, 420px)",
+                                height="clamp(260px, 40vw, 420px)",
+                            ),
                         ),
-                        "filter": "blur(calc((1 - var(--scroll, 0)) * 2px))",
-                    },
+                        rx.text(
+                            "High school led astronomy colloquium series featuring talks\n from leading PhD researchers",
+                            style={
+                                "color": "#ffffff",
+                                "position": "relative",
+                                "pointer_events": "none",
+                                "text_align": "center",
+                                "font_size": "clamp(1rem, 1.2vw + 0.5rem, 1.75rem)",
+                                "font_weight": "400",
+                                "font_family": "sans-serif",
+                                "letter_spacing": "0.15em",
+                                "max_width": "35ch",
+                                "margin_x": "auto",
+                            }
+                        ),
+                        rx.desktop_only(
+                            rx.box(
+                                rx.image(
+                                    src="images/sputnik.png",
+                                    style={
+                                        "position": "absolute",
+                                        "top": "10%",
+                                        "left": "0",
+                                        "width": "60%",
+                                        "z_index": "1",
+                                        "transition": "transform 0.3s ease, filter 0.3s ease",
+                                        "_hover": {
+                                          "transform": "scale(1.05)",
+                                          "filter": "brightness(1.2)"  
+                                        },
+                                    },
+                                ),
+                                rx.image(
+                                    src="images/starship.png",
+                                    style={
+                                        "position": "absolute",
+                                        "top": "0",
+                                        "left": "10%",
+                                        "z_index": "2",
+                                        "transition": "transform 0.3s ease, filter 0.3s ease",
+                                        "_hover": {
+                                          "transform": "scale(1.05)",
+                                          "filter": "brightness(1.2)"  
+                                        },   
+                                    },    
+                                ),
+                                rx.image(
+                                    src="images/telescope.png",
+                                    style={
+                                    "position": "absolute",
+                                    "top": "30%",
+                                    "left": "-20%",
+                                    "z_index": "3",
+                                    "transition": "transform 0.3s ease, filter 0.3s ease",
+                                    "_hover": {
+                                          "transform": "scale(1.05)",
+                                          "filter": "brightness(1.2)"  
+                                    },  
+                                    },
+                                ),
+                                position="relative",
+                                display={
+                                "initial": "none",
+                                "sm": "block",
+                                },
+                                width="clamp(260px, 40vw, 420px)",
+                                height="clamp(260px, 40vw, 420px)"
+                            ),
+                        ),
+                        style={
+                            "opacity": "calc(clamp(0, (var(--scroll, 0) - 0.5) * 4, 1) * (0.6 + var(--scroll, 0) * 0.4))",
+                        },
+                        direction="row",
+                        spacing="5",
+                        align="center",
+                        justify="center",
+                    ),
+                    direction="column",
+                    align="center",
+                    spacing="3",
                 ),
                 rx.image(
                     src="/images/astronaut.png",
@@ -201,35 +349,9 @@ def content() -> rx.Component:
                             "translateX(-50%) "
                             "translateY(calc(var(--scroll, 0) * 32px))"
                             ),
-                        "opacity": "calc(1 - min(var(--scroll, 0) * 1.4, 1))",
-                        "filter": "blur(calc(min(var(--scroll, 0) * 1.4, 1) * 8px))",
+                        "opacity": "calc(1 - min(var(--scroll, 0) * 1.2, 1))",
+                        "filter": "blur(calc(min(var(--scroll, 0) * 2.4, 1) * 8px))",
                     },
-                ),
-                rx.flex(
-                    rx.text(
-                        "High school led astronomy colloquium series featuring talks\n from leading PhD researchers",
-                        style={
-                            "color": "#ffffff",
-                            "position": "relative",
-                            "pointer_events": "none",
-                            "opacity": "calc(clamp(0, (var(--scroll, 0) - 0.5) * 4, 1) * (0.6 + var(--scroll, 0) * 0.4))",
-                            "transform": (
-                                "translateY(-16rem)"
-                                "translateY(calc((1 - clamp(0, (var(--scroll, 0) - 0.75) * 4, 1)) * 2rem))"
-                            ),
-                            "text_align": "center",
-                            "font_size": "clamp(1rem, 1.2vw + 0.5rem, 1.75rem)",
-                            "font_weight": "400",
-                            "font_family": "sans-serif",
-                            "letter_spacing": "0.15em",
-                            "max_width": "35ch",
-                            "margin_x": "auto",
-                        }
-                    ),
-                    spacing="5",
-                    direction="row",
-                    align="center",
-                    justify="center",
                 ),
                 rx.box(height="120vh"),
                 position="relative",
