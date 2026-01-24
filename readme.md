@@ -16,5 +16,5 @@ https://noctspace.netlify.app
 
 ## Tech Stack
 
-- **Framework:** Reflex (Python-based reactive UI)
+- **Framework:** Reflex
 - **Styling:** CSS
