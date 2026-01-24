@@ -204,6 +204,7 @@ def content() -> rx.Component:
                             "filter": "blur(calc((1 - var(--scroll, 0)) * 2px))",
                         },
                     ),
+                    rx.box(height="10vh"),
                     rx.flex(
                         rx.desktop_only(
                             rx.box(
@@ -334,9 +335,40 @@ def content() -> rx.Component:
                         align="center",
                         justify="center",
                     ),
+                    rx.box(height="20vh"),
+                    rx.box(
+                        rx.text(
+                            "Past Speakers From",
+                            style={
+                                "color": "#ffffff",
+                                "font_size": "clamp(2rem, 2.5vw + 1rem, 3.5rem)",
+                                "font_weight": "400",
+                                "font_family": "sans-serif",
+                                "align": "center",
+                                "justify": "center",
+                            }
+                        ),
+                        rx.box(height="5vh"),
+                        rx.flex(
+                            rx.image(src="images/logos/mit.png", height="100px", width="auto", object_fit="contain",),
+                            rx.image(src="images/logos/Harvard.svg", height="100px", width="auto", object_fit="contain",),
+                            rx.image(src="images/logos/ligo.png", height="100px", width="auto", object_fit="contain",),
+                            rx.image(src="images/logos/cmu.avif", height="100px", width="auto", object_fit="contain",),
+                            rx.image(src="images/logos/uofedinburgh.png", height="100px", width="auto", object_fit="contain",),
+                            rx.image(src="images/logos/uofvirginia.png", height="100px", width="auto", object_fit="contain",),
+                            direction="row",
+                            wrap="wrap",
+                            spacing="9",
+                            align="center",
+                            justify="center",
+                        ),
+                        style={"text_align": "center",},
+                        width="100%",   
+                    ),
                     direction="column",
                     align="center",
-                    spacing="3",
+                    spacing="6",
+                    width="100%",
                 ),
                 rx.image(
                     src="/images/astronaut.png",
@@ -353,10 +385,11 @@ def content() -> rx.Component:
                         "filter": "blur(calc(min(var(--scroll, 0) * 2.4, 1) * 8px))",
                     },
                 ),
-                rx.box(height="120vh"),
+                rx.box(height="20vh"),
                 position="relative",
                 width="100%",
                 height="100%",
+                overflow_x="hidden",
             ),
     
 
@@ -370,7 +403,9 @@ def index() -> rx.Component:
             inset="0",
             z_index="1",
             background_color="transparent",
+            width="100%",
         ),
+        width="100%",
     )
 
 
